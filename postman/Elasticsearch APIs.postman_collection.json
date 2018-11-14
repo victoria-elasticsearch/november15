@@ -1,0 +1,1139 @@
+{
+	"info": {
+		"_postman_id": "b9ab5045-0b81-8fd2-2fb4-c86ff1ba10be",
+		"name": "Elasticsearch APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cat API",
+			"item": [
+				{
+					"name": "0. Commands",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat"
+							]
+						},
+						"description": "the /_cat command alone lists all the available commands."
+					},
+					"response": []
+				},
+				{
+					"name": "1. Allocation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat/allocation?v",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat",
+								"allocation"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								}
+							]
+						},
+						"description": "allocation provides a snapshot of how many shards are allocated to each data node and how much disk space they are using."
+					},
+					"response": []
+				},
+				{
+					"name": "2.1 Count (cluster)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat/count?v",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat",
+								"count"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								}
+							]
+						},
+						"description": "count provides quick access to the document count of the entire cluster, or individual indices."
+					},
+					"response": []
+				},
+				{
+					"name": "2.2 Count (index)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"postman.setEnvironmentVariable(\"index\", \"logstash-2017.10.24\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat/count/{{index}}?v",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat",
+								"count",
+								"{{index}}"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								}
+							]
+						},
+						"description": "count provides quick access to the document count of the entire cluster, or individual indices."
+					},
+					"response": []
+				},
+				{
+					"name": "3. Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat/health?v&ts=false",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat",
+								"health"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								},
+								{
+									"key": "ts",
+									"value": "false"
+								}
+							]
+						},
+						"description": "health is a terse, one-line representation of the same information from /_cluster/health"
+					},
+					"response": []
+				},
+				{
+					"name": "4.1 Indices (all)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "116b6194-1f74-4f32-9d13-5faffe3efea2",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat/indices?v&s=index:desc",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat",
+								"indices"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								},
+								{
+									"key": "s",
+									"value": "index:desc"
+								}
+							]
+						},
+						"description": "The indices command provides a cross-section of each index. This information spans nodes. For example:"
+					},
+					"response": []
+				},
+				{
+					"name": "4.2 Indices (columns)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat/indices/{{index}}?v",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat",
+								"indices",
+								"{{index}}"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								}
+							]
+						},
+						"description": "How much memory is used per index?"
+					},
+					"response": []
+				},
+				{
+					"name": "5. Master",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat/master?v",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat",
+								"master"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								}
+							]
+						},
+						"description": "master doesn’t have any extra options. It simply displays the master’s node ID, bound IP address, and node name."
+					},
+					"response": []
+				},
+				{
+					"name": "6.1 Node Attrs (all)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat/nodeattrs?v",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat",
+								"nodeattrs"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								}
+							]
+						},
+						"description": "The nodeattrs command shows custom node attributes."
+					},
+					"response": []
+				},
+				{
+					"name": "6.2 Node Attrs (columns)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat/nodeattrs?v&h=name,pid,attr,value",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat",
+								"nodeattrs"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								},
+								{
+									"key": "h",
+									"value": "name,pid,attr,value"
+								}
+							]
+						},
+						"description": "When specifying headers, the headers are not placed in the output by default. To have the headers appear in the output, use verbose mode (v). The header name will match the supplied value (e.g., pid versus p)."
+					},
+					"response": []
+				},
+				{
+					"name": "7.1 Nodes (all)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat/nodes?v",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat",
+								"nodes"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								}
+							]
+						},
+						"description": "The nodes command shows the cluster topology. "
+					},
+					"response": []
+				},
+				{
+					"name": "7.2 Nodes (columns)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat/nodes?v&h=id,ip,port,v,m",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat",
+								"nodes"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								},
+								{
+									"key": "h",
+									"value": "id,ip,port,v,m"
+								}
+							]
+						},
+						"description": "When specifying headers, the headers are not placed in the output by default. To have the headers appear in the output, use verbose mode (v). The header name will match the supplied value (e.g., pid versus p)."
+					},
+					"response": []
+				},
+				{
+					"name": "8. Pending Tasks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat/pending_tasks?v",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat",
+								"pending_tasks"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								}
+							]
+						},
+						"description": "pending_tasks provides the same information as the /_cluster/pending_tasks API in a convenient tabular format."
+					},
+					"response": []
+				},
+				{
+					"name": "9. Plugins",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat/plugins?v&s=component&h=name,component,version,description\n",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat",
+								"plugins"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								},
+								{
+									"key": "s",
+									"value": "component"
+								},
+								{
+									"key": "h",
+									"value": "name,component,version,description\n"
+								}
+							]
+						},
+						"description": "The plugins command provides a view per node of running plugins. This information spans nodes."
+					},
+					"response": []
+				},
+				{
+					"name": "10. Recovery",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat/recovery?v",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat",
+								"recovery"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								}
+							]
+						},
+						"description": "The recovery command is a view of index shard recoveries, both on-going and previously completed. It is a more compact view of the JSON recovery API."
+					},
+					"response": []
+				},
+				{
+					"name": "11. Repositories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat/repositories?v",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat",
+								"repositories"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								}
+							]
+						},
+						"description": "The repositories command shows the snapshot repositories registered in the cluster. "
+					},
+					"response": []
+				},
+				{
+					"name": "12. Thread Pool",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat/thread_pool?v",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat",
+								"thread_pool"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								}
+							]
+						},
+						"description": "The thread_pool command shows cluster wide thread pool statistics per node. By default the active, queue and rejected statistics are returned for all thread pools."
+					},
+					"response": []
+				},
+				{
+					"name": "13. Shards",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"postman.setEnvironmentVariable(\"indices\", \"logstash-*\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat/shards/{{indices}}?v",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat",
+								"shards",
+								"{{indices}}"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								}
+							]
+						},
+						"description": "The shards command is the detailed view of what nodes contain which shards. It will tell you if it’s a primary or replica, the number of docs, the bytes it takes on disk, and the node where it’s located."
+					},
+					"response": []
+				},
+				{
+					"name": "14. Segments",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"postman.setEnvironmentVariable(\"indices\", \"logstash-*\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat/segments/{{indices}}?v",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat",
+								"segments",
+								"{{indices}}"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								}
+							]
+						},
+						"description": "The segments command provides low level information about the segments in the shards of an index. It provides information similar to the _segments endpoint."
+					},
+					"response": []
+				},
+				{
+					"name": "15. Snapshots",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"postman.setEnvironmentVariable(\"repo\", \"foo\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat/snapshots/{{repo}}?v&s=id",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat",
+								"snapshots",
+								"{{repo}}"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								},
+								{
+									"key": "s",
+									"value": "id"
+								}
+							]
+						},
+						"description": "The snapshots command shows all snapshots that belong to a specific repository."
+					},
+					"response": []
+				},
+				{
+					"name": "16. Templates",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"postman.setEnvironmentVariable(\"templates\", \"*\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_cat/templates/{{templates}}?v&s=name",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_cat",
+								"templates",
+								"{{templates}}"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								},
+								{
+									"key": "s",
+									"value": "name"
+								}
+							]
+						},
+						"description": "The templates command provides information about existing templates."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cluster API",
+			"item": [
+				{
+					"name": "Commission Node",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  “transient”: {\n    “cluster.routing.allocation.exclude._ip”: “”\n  }\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/{{index}}",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{index}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Document API",
+			"item": [
+				{
+					"name": "2.2 Get Documents",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"postman.setEnvironmentVariable(\"index\", \"logstash-2017.10.21\");",
+									"",
+									"postman.setEnvironmentVariable(\"type\", \"test.corpus\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"docs\" : [\r\n        {\r\n            \"_index\" : \"logstash-2017.10.21\",\r\n            \"_type\" : \"test.corpus\",\r\n            \"_id\" : \"AV8_MbVqGm4NgahSKdmO\"\r\n        },\r\n        {\r\n            \"_index\" : \"logstash-2017.10.21\",\r\n            \"_type\" : \"test.corpus\",\r\n            \"_id\" : \"AV8_MbVqGm4NgahSKdmC\"\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_mget",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_mget"
+							]
+						},
+						"description": "Multi GET API allows to get multiple documents based on an index, type (optional) and id (and possibly routing)."
+					},
+					"response": []
+				},
+				{
+					"name": "1. Index Documents",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f4180bbc-ed69-4915-8040-ed9fa5b29cc3",
+								"exec": [
+									"postman.setEnvironmentVariable(\"type\", \"post\");",
+									"postman.setEnvironmentVariable(\"doc_id\", \"1\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user\" : \"november 15\",\r\n    \"post_date\" : \"2018-11-15T14:12:12\",\r\n    \"message\" : \"Elk basics.\"\r\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/{{index}}/{{type}}/{{doc_id}}",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{index}}",
+								"{{type}}",
+								"{{doc_id}}"
+							]
+						},
+						"description": "The index API adds or updates a typed JSON document in a specific index, making it searchable."
+					},
+					"response": []
+				},
+				{
+					"name": "2.1 Get Document",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "4ffae6b2-fea6-44af-a6e3-166d88896ecc",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/{{index}}/{{type}}/{{doc_id}}",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{index}}",
+								"{{type}}",
+								"{{doc_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Favorites ( > 8 < )",
+			"item": []
+		},
+		{
+			"name": "Index API",
+			"item": [
+				{
+					"name": "Create Index",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "86316b53-07a6-49b3-941b-1d3f7256785a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/{{index}}",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{index}}"
+							]
+						},
+						"description": "The create index API allows to instantiate an index."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Index Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "86316b53-07a6-49b3-941b-1d3f7256785a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"test data\",\n\t\"number\": 123,\n\t\"user\": \"alex\"\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/{{index}}",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{index}}"
+							]
+						},
+						"description": "The create index API allows to instantiate an index."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Index",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e9fc5000-6b8a-4f84-9495-1fcc779342f0",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/{{index}}",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{index}}"
+							]
+						},
+						"description": "The create index API allows to instantiate an index."
+					},
+					"response": []
+				},
+				{
+					"name": "Put Mapping",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"postman.setEnvironmentVariable(\"index\", \"twitter\");",
+									"postman.setEnvironmentVariable(\"mapping_type\", \"user\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"properties\": {\r\n    \"name\": {\r\n      \"type\": \"text\"\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/{{index}}/_mapping/{{mapping_type}}",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{index}}",
+								"_mapping",
+								"{{mapping_type}}"
+							]
+						},
+						"description": "The PUT mapping API allows you to add a new type to an existing index, or add new fields to an existing type."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Mapping",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"postman.setEnvironmentVariable(\"index\", \"twitter\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/{{index}}1950/_mapping",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{index}}1950",
+								"_mapping"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "The create index API allows to instantiate an index."
+		},
+		{
+			"name": "TemplateAPI",
+			"item": [
+				{
+					"name": "List Template",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_template",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_template"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Template",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_template/{{template_name}}",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_template",
+								"{{template_name}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Template",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"index_patterns\": [\"bc-traffic-*\"],\r\n    \"order\": 0,\r\n    \"settings\": {\r\n        \"number_of_shards\": 1\r\n    },\r\n    \"version\": 2,\r\n    \"mappings\": {\r\n        \"doc\": {\r\n            \"properties\": {\r\n                \"@timestamp\": {\r\n                    \"type\": \"date\"\r\n                },\r\n                \"@version\": {\r\n                    \"type\": \"text\",\r\n                    \"fields\": {\r\n                        \"keyword\": {\r\n                            \"type\": \"keyword\",\r\n                            \"ignore_above\": 256\r\n                        }\r\n                    }\r\n                },\r\n                \"beat\": {\r\n                    \"properties\": {\r\n                        \"hostname\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"name\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"version\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        }\r\n                    }\r\n                },\r\n                \"host\": {\r\n                    \"properties\": {\r\n                        \"name\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        }\r\n                    }\r\n                },\r\n                \"input\": {\r\n                    \"properties\": {\r\n                        \"type\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        }\r\n                    }\r\n                },\r\n                \"message\": {\r\n                    \"type\": \"text\",\r\n                    \"fields\": {\r\n                        \"keyword\": {\r\n                            \"type\": \"keyword\",\r\n                            \"ignore_above\": 256\r\n                        }\r\n                    }\r\n                },\r\n                \"offset\": {\r\n                    \"type\": \"long\"\r\n                },\r\n                \"prospector\": {\r\n                    \"properties\": {\r\n                        \"type\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        }\r\n                    }\r\n                },\r\n                \"source\": {\r\n                    \"type\": \"text\",\r\n                    \"fields\": {\r\n                        \"keyword\": {\r\n                            \"type\": \"keyword\",\r\n                            \"ignore_above\": 256\r\n                        }\r\n                    }\r\n                },\r\n                \"tags\": {\r\n                    \"type\": \"text\",\r\n                    \"fields\": {\r\n                        \"keyword\": {\r\n                            \"type\": \"keyword\",\r\n                            \"ignore_above\": 256\r\n                        }\r\n                    }\r\n                },\r\n                \"traffic_event\": {\r\n                    \"properties\": {\r\n                        \"advisorymessage\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"cause\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"direction\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"district\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"districtnum\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"endtime\": {\r\n                            \"type\": \"date\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"from\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"geometry\": {\r\n                            \"type\": \"geo_shape\"\r\n                        },\r\n                        \"head_latitude\": {\r\n                            \"type\": \"float\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"head_longitude\": {\r\n                            \"type\": \"float\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"headdistfrombgn\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"id\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"isbidirectional\": {\r\n                            \"type\": \"boolean\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"localupdatetime\": {\r\n                            \"type\": \"date\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"location\": {\r\n                            \"properties\": {\r\n                                \"head\": {\r\n                                    \"type\": \"geo_point\"\r\n                                },\r\n                                \"tail\": {\r\n                                    \"type\": \"geo_point\"\r\n                                }\r\n                            }\r\n                        },\r\n                        \"popular_route\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"route\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"severity\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"starttime\": {\r\n                            \"type\": \"date\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"state\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"tail_latitude\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"tail_longitude\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"to\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"trafficpattern\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        },\r\n                        \"type\": {\r\n                            \"type\": \"text\",\r\n                            \"fields\": {\r\n                                \"keyword\": {\r\n                                    \"type\": \"keyword\",\r\n                                    \"ignore_above\": 256\r\n                                }\r\n                            }\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_template/{{template_name}}",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_template",
+								"{{template_name}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Template",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://{{url}}:{{port}}/_template/{{template_name}}",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"_template",
+								"{{template_name}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "elasticSearch [templateApi](https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html)"
+		}
+	]
+}
