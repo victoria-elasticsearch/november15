@@ -40,11 +40,13 @@ services:
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - ./logstash/translate:/usr/share/logstash/translate:ro
       - $LOGSTASH_DATAPATH:/usr/share/logstash/data
-    ports:
-      - "5044:5044"
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    ports:
+      - "5044:5044"
+      - "9600:9600"
     depends_on: 
       - elasticsearch
     networks:
