@@ -1,0 +1,3 @@
+^/pet*: pet
+^/store.*: store
+^/user.*: user
